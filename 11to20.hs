@@ -28,3 +28,11 @@ encodeModified' = map encodeHelper . encode
   where
     encodeHelper (1, x) = Single x
     encodeHelper (n, x) = Multiple n x
+
+
+-- exercise 12
+decodeModified :: (Eq a) => [ListItem a] -> [a]
+decodeModified = concatMap decodeHelper
+  where
+    decodeHelper (Single x) = [x]
+    decodeHelper (Multiple n x) = replicate n x
