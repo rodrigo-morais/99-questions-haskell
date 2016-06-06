@@ -56,4 +56,9 @@ encodeDirect = map encodeHelper . encode'
 
 -- exercise 14
 dupli :: [a] -> [a]
-dupli xs = foldr (++) [] $ map (replicate 2)
+dupli xs = foldr (++) [] $ map (replicate 2) xs
+
+
+-- exercise 15
+repli :: [a] -> Int -> [a]
+repli xs n = foldr (++) [] $ map (replicate n) xs
