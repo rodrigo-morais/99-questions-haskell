@@ -97,3 +97,16 @@ rotate n xs
     | n == 0 = xs
     | n > 0 = rotate (n - 1) $ (tail xs ++ [head xs])
     | otherwise = rotate (n + 1) $ last xs : init xs
+
+-- exercise 20
+removeAt :: Int -> [a] -> (Maybe a, [a])
+removeAt _ [] = (Nothing, [])
+removeAt 0 xs = (Nothing, [])
+removeAt n xs = 
+  let
+    element = head $ drop (n-1) xs
+
+    residue = take (n-1) xs ++ drop n xs
+
+  in
+    (Just element, residue)
