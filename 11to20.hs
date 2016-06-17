@@ -67,3 +67,20 @@ repli xs n = foldr (++) [] $ map (replicate n) xs
 dropEvery :: [a] -> Int -> [a]
 dropEvery [] _ = []
 dropEvery xs n = (take (n-1) xs) ++ dropEvery (drop n xs) n
+
+-- exercise 17
+split :: [a] -> Int -> ([a],[a])
+split [] _ = ([], [])
+split xs n = splitAt n xs
+
+split' :: [a] -> Int -> ([a],[a])
+split' [] _ = ([], [])
+split' xs n = 
+  let
+    takeLeft =
+      take n xs
+
+    takeRight =
+      drop n xs
+  in
+    (takeLeft, takeRight)
