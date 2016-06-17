@@ -84,3 +84,8 @@ split' xs n =
       drop n xs
   in
     (takeLeft, takeRight)
+
+-- exercise 18
+slice :: [a] -> Int -> Int -> [a]
+slice [] _ _ = []
+slice xs begin end = take (end - (begin - 1)) $ drop (begin - 1) xs 
