@@ -88,4 +88,12 @@ split' xs n =
 -- exercise 18
 slice :: [a] -> Int -> Int -> [a]
 slice [] _ _ = []
-slice xs begin end = take (end - (begin - 1)) $ drop (begin - 1) xs 
+slice xs begin end = take (end - (begin - 1)) $ drop (begin - 1) xs
+
+-- exercise 19
+rotate :: Int -> [a] -> [a]
+rotate _ [] = []
+rotate n xs
+    | n == 0 = xs
+    | n > 0 = rotate (n - 1) $ (tail xs ++ [head xs])
+    | otherwise = rotate (n + 1) $ last xs : init xs
