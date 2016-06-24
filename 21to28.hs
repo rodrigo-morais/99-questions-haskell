@@ -1,5 +1,3 @@
-import Data.List
-
 -- exercise 21
 insertAt :: a -> [a] -> Int -> [a]
 insertAt newValue xs pos =
@@ -16,3 +14,24 @@ insertAt' newValue xs pos =
 
   in
     ys ++ newValue:zs
+
+
+-- exercise 22
+range :: Int -> Int -> [Int]
+range begin end
+  | begin > end = []
+  | otherwise = range begin (end - 1) ++ [end]
+
+
+range' :: Int -> Int -> [Int]
+range' begin end
+  | begin > end = []
+  | otherwise = begin : range (begin + 1) end
+
+
+range'' :: Int -> Int -> [Int]
+range'' begin end = [begin..end]
+
+
+range''' :: Int -> Int -> [Int]
+range''' begin end = take (end - begin + 1) $ iterate (+1) begin
