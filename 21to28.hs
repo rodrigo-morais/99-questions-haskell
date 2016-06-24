@@ -1,3 +1,7 @@
+import System.Random
+import Control.Monad (replicateM)
+
+
 -- exercise 21
 insertAt :: a -> [a] -> Int -> [a]
 insertAt newValue xs pos =
@@ -35,3 +39,13 @@ range'' begin end = [begin..end]
 
 range''' :: Int -> Int -> [Int]
 range''' begin end = take (end - begin + 1) $ iterate (+1) begin
+
+
+-- exercise 23
+rnd_select :: [a] -> Int -> IO [a]
+rnd_select [] _ = return []
+rnd_select xs n
+  | n < 0 = return []
+  | otherwise = do pos <- replicateM n $
+                    getStdRandom $ randomR (0, (length xs) - 1)
+                   return [xs!!p | p <- pos]
