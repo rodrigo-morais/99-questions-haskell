@@ -42,10 +42,22 @@ range''' begin end = take (end - begin + 1) $ iterate (+1) begin
 
 
 -- exercise 23
-rnd_select :: [a] -> Int -> IO [a]
-rnd_select [] _ = return []
-rnd_select xs n
+rnd_select :: Int -> [a] -> IO [a]
+rnd_select _ [] = return []
+rnd_select n xs
   | n < 0 = return []
   | otherwise = do pos <- replicateM n $
                     getStdRandom $ randomR (0, (length xs) - 1)
                    return [xs!!p | p <- pos]
+
+
+-- exercise 24
+diff_select :: Int -> Int -> IO [Int]
+diff_select n to = diff_select' n [1..to]
+ 
+diff_select' 0 _  = return []
+diff_select' _ [] = error "too few elements to choose from"
+diff_select' n xs = do r <- randomRIO (0,(length xs)-1)
+                       let remaining = take r xs ++ drop (r+1) xs
+                       rest <- diff_select' (n-1) remaining
+                       return ((xs!!r) : rest)
