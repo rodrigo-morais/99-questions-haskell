@@ -61,3 +61,8 @@ diff_select' n xs = do r <- randomRIO (0,(length xs)-1)
                        let remaining = take r xs ++ drop (r+1) xs
                        rest <- diff_select' (n-1) remaining
                        return ((xs!!r) : rest)
+
+
+-- exercise 25
+rn_permu :: [a] -> IO [a]
+rn_permu xs = rnd_select (length xs) xs
