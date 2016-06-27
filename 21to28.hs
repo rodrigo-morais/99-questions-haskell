@@ -1,5 +1,6 @@
 import System.Random
 import Control.Monad (replicateM)
+import Data.List (tails)
 
 
 -- exercise 21
@@ -66,3 +67,15 @@ diff_select' n xs = do r <- randomRIO (0,(length xs)-1)
 -- exercise 25
 rn_permu :: [a] -> IO [a]
 rn_permu xs = rnd_select (length xs) xs
+
+
+-- exercise 26
+combinations :: Int -> [a] -> [[a]]
+combinations 0 _  = [ [] ]
+combinations n xs = [ y:ys | y:xs' <- tails xs
+                           , ys <- combinations (n-1) xs']
+
+combinations' :: Int -> [a] -> [[a]]
+combinations' 0 _      = [[]]
+combinations' _ []     = []
+combinations' m (x:xs) = map (x:) (combinations (m-1) xs) ++ combinations m xs
