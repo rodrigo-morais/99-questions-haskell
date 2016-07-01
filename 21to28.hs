@@ -79,3 +79,11 @@ combinations' :: Int -> [a] -> [[a]]
 combinations' 0 _      = [[]]
 combinations' _ []     = []
 combinations' m (x:xs) = map (x:) (combinations (m-1) xs) ++ combinations m xs
+
+
+-- exercise 27
+group :: Int -> [a] -> [[a]]
+group n xs =
+  case xs of
+    [] -> []
+    _ -> [take n xs] ++ group (n + 1) (drop n xs)
