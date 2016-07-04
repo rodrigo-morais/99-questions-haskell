@@ -82,8 +82,29 @@ combinations' m (x:xs) = map (x:) (combinations (m-1) xs) ++ combinations m xs
 
 
 -- exercise 27
-group :: Int -> [a] -> [[a]]
+group :: [Int] -> [a] -> [[a]]
 group n xs =
   case xs of
     [] -> []
-    _ -> [take n xs] ++ group (n + 1) (drop n xs)
+    _ -> [take (head n) xs] ++ group (tail n) (drop (head n) xs)
+
+group' :: [Int] -> [a] -> [[a]]
+group' n xs =
+  case n of
+    [] -> []
+    _ -> combinations (head n) xs ++ group' (tail n) xs
+
+
+combination :: Int -> [a] -> [([a],[a])]
+combination 0 xs     = [([],xs)]
+combination n []     = []
+combination n (x:xs) = ts ++ ds
+  where
+    ts = [ (x:ys,zs) | (ys,zs) <- combination (n-1) xs ]
+    ds = [ (ys,x:zs) | (ys,zs) <- combination  n    xs ]
+
+group'' :: [Int] -> [a] -> [[[a]]]
+group'' [] _ = [[]]
+group'' (n:ns) xs =
+  [ g:gs | (g, rs) <- combination n xs
+         , gs <- group'' ns rs ]
