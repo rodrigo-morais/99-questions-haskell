@@ -1,6 +1,6 @@
 import System.Random
 import Control.Monad (replicateM)
-import Data.List (tails)
+import Data.List (tails, sortBy)
 
 
 -- exercise 21
@@ -108,3 +108,18 @@ group'' [] _ = [[]]
 group'' (n:ns) xs =
   [ g:gs | (g, rs) <- combination n xs
          , gs <- group'' ns rs ]
+
+
+-- exercise 28
+lsort :: [[a]] -> [[a]]
+lsort xs = map (fst) $ sortBy (compareTuples) (addSize xs)
+
+addSize :: [[a]] -> [([a], Int)]
+addSize [] = []
+addSize xs = [(head xs, length (head xs))] ++ addSize (tail xs)
+
+compareTuples :: Ord b => (x, b) -> (x1, b) -> Ordering
+compareTuples (xs, b) (ys, c)
+  | b < c = LT
+  | b > c = GT
+  | b == c = compare b c
