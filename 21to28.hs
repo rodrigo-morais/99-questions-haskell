@@ -111,15 +111,11 @@ group'' (n:ns) xs =
 
 
 -- exercise 28
-lsort :: [[a]] -> [[a]]
-lsort xs = map (fst) $ sortBy (compareTuples) (addSize xs)
+lsort :: Ord a => [[a]] -> [[a]]
+lsort xs = sortBy (compareLength) xs
 
-addSize :: [[a]] -> [([a], Int)]
-addSize [] = []
-addSize xs = [(head xs, length (head xs))] ++ addSize (tail xs)
-
-compareTuples :: Ord b => (x, b) -> (x1, b) -> Ordering
-compareTuples (xs, b) (ys, c)
-  | b < c = LT
-  | b > c = GT
-  | b == c = compare b c
+compareLength :: (Ord (t a), Foldable t) => t a -> t a -> Ordering
+compareLength xs ys
+  | length xs < length ys = LT
+  | length xs > length ys = GT
+  | length xs == length ys = compare xs ys
