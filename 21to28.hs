@@ -1,6 +1,7 @@
 import System.Random
 import Control.Monad (replicateM)
 import Data.List (tails, sortBy)
+import Data.Tuple.Select
 
 
 -- exercise 21
@@ -119,3 +120,22 @@ compareLength xs ys
   | length xs < length ys = LT
   | length xs > length ys = GT
   | length xs == length ys = compare xs ys
+
+addSize :: [[a]] -> [([a], Int)]
+addSize [] = []
+addSize xs = [(head xs, length (head xs))] ++ addSize (tail xs)
+
+addFrequency :: [([a], Int)] -> [([a], Int)] -> [([a], Int, Int)]
+addFrequency _ [] = []
+addFrequency xs (y:ys) = [((fst y), (snd y), length . filter(\x -> x == (snd y)) $ map (snd) xs)] ++ addFrequency xs ys
+
+compareFrequency :: (Ord a, Ord a1, Ord a2) => (a2, a1, a) -> (a2, a1, a) -> Ordering
+compareFrequency (xs, b, c) (ys, d, e)
+  | c < e = LT
+  | c > e = GT
+  | b < d = GT
+  | b > d = GT
+  | otherwise = compare xs ys
+
+lsort' :: Ord a => [[a]] -> [[a]]
+lsort' xs = map (sel1) . sortBy (compareFrequency) $ addFrequency (addSize xs) (addSize xs)
